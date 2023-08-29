@@ -3,37 +3,21 @@ public class Main {
 
     public static void main(String[] args) {
 
-        CircularQueue cqueue = new CircularQueue(4);
+        DoubleLinkedList<String> lista = new DoubleLinkedList<>();
 
-        cqueue.add(1);
-        cqueue.print();
+        lista.add("1");
+        lista.print();
 
-        cqueue.add(2);
-        cqueue.print();
+        lista.add("2");
+        lista.print();
 
-        cqueue.add(3);
-        cqueue.print();
+        lista.add("3");
+        lista.print();
 
-        cqueue.add(4);
-        cqueue.print();
+        lista.add("4");
+        lista.print();
 
-        cqueue.add(5);
-        cqueue.print();
-
-        cqueue.add(6);
-        cqueue.print();
-
-        cqueue.add(7);
-        cqueue.print();
-
-        cqueue.clear();
-        cqueue.print();
-
-        cqueue.add(1);
-        cqueue.print();
-
-        cqueue.add(2);
-        cqueue.print();
-
+        lista.add("5");
+        lista.print();
     }
 }
