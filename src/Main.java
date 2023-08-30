@@ -3,21 +3,20 @@ public class Main {
 
     public static void main(String[] args) {
 
-        DoubleLinkedList<String> lista = new DoubleLinkedList<>();
+        // Matriz exemplo
+        int[][] image = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                         {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+                         {1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
+                         {1, 1, 1, 1, 1, 1, 0, 1, 1, 1},
+                         {1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+                         {1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
+                         {1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
+                         {1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
+                         {1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+                         {0, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
-        lista.add("1");
-        lista.print();
+        FloodFill floodfill = new FloodFill(image);
 
-        lista.add("2");
-        lista.print();
-
-        lista.add("3");
-        lista.print();
-
-        lista.add("4");
-        lista.print();
-
-        lista.add("5");
-        lista.print();
+        floodfill.fill(7, 7, 5);
     }
 }
