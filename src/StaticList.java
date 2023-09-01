@@ -12,12 +12,10 @@ public class StaticList {
 
     public void clear() {
         for (int i = 0; i < size; i++) {
-            // Já que não podemos definir int como null defini que o valor padrão será 0
             data[i] = 0;
         }
     }
 
-    // Adiciona na primeira posição que tiver o valor 0 ("vazio")
     public void add(int value) {
         if (!isFull()) {
             for (int i = 0; i < size; i++) {

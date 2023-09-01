@@ -1,15 +1,15 @@
 /*
 
-CASO ENCONTRAREM ALGUM ERRO OU ALGO QUE POSSA MELHORAR POR FAVOR ME COMUNICAR
- PARA MIM PODER ATUALIZAR O REPOSITÓRIO
+CASO ENCONTRAREM ALGUM ERRO OU ALGO QUE POSSA MELHORAR POR FAVOR ME AVISEM
 
  CÓDIGO POR GABRIEL FERNANDES
+ DISCORD: https://discord.gg/aQycwZVKhz
 
  */
 
 public class DoubleLinkedList<T> {
-    public Node<T> base;
-    public Node<T> top;
+    private Node<T> base;
+    private Node<T> top;
     private int size;
 
     public DoubleLinkedList() {
