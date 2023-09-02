@@ -1,35 +1,34 @@
-import java.util.Arrays;
+import java.util.Arrays; // utilizado para printar
 
-public class StaticList {
+public class StaticList<T> {
 
-    private int[] data;
+    private T[] data;
     private int size;
 
     public StaticList(int size) {
-        this.data = new int[size];
+        this.data = (T[]) new Object[size];
         this.size = size;
     }
 
     public void clear() {
         for (int i = 0; i < size; i++) {
-            data[i] = 0;
+            data[i] = null;
         }
     }
 
-    public void add(int value) {
+    public void add(T value) {
         if (!isFull()) {
             for (int i = 0; i < size; i++) {
-                if (data[i] == 0) {
+                if (data[i] == null) {
                     data[i] = value;
                 }
             }
         }
     }
 
-    public int remove(int pos) {
+    public T remove(int pos) {
         if (inBounds(pos)) {
-            int tmp;
-            tmp = data[pos];
+            T tmp = data[pos];
 
             for (int i = pos; i < size-1; i++) {
                 data[pos] = data[pos+1];
@@ -37,12 +36,12 @@ public class StaticList {
 
             return tmp;
         }
-        return -1;
+        return null;
     }
 
     public boolean isEmpty() {
         for (int i = 0; i < size; i++) {
-            if (data[i] != 0) {
+            if (data[i] != null) {
                 return false;
             }
         }
@@ -51,14 +50,14 @@ public class StaticList {
 
     public boolean isFull() {
         for (int i = 0; i < size; i++) {
-            if (data[i] == 0) {
+            if (data[i] == null) {
                 return false;
             }
         }
         return true;
     }
 
-    public void setData(int value, int pos) {
+    public void setData(T value, int pos) {
         if (inBounds(pos)) {
             data[pos] = value;
         }
@@ -67,18 +66,18 @@ public class StaticList {
         }
     }
 
-    public int getData(int pos) {
+    public T getData(int pos) {
         if (inBounds(pos)) {
             return data[pos];
         }
-        return -1;
+        return null;
     }
 
     public int getSize() {
         return size;
     }
 
-    public int find(int value) {
+    public int find(T value) {
         for (int i = 0; i < size; i++) {
             if (data[i] == value) {
                 return i;

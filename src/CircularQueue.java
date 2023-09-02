@@ -1,20 +1,17 @@
-// NESTA IMPLEMENTAÇÃO DEFINI VALORES DELETADOS/INDEFINIDOS COMO ZERO
-
-public class CircularQueue {
+public class CircularQueue<T> {
 
     private int top;
     private int base;
-    private int[] data;
+    private T[] data;
 
     public CircularQueue(int size) {
         this.top =  -1;
         this.base = -1;
-        this.data = new int[size];
+        this.data = (T[]) new Object[size];
     }
 
-    public void add(int value) {
+    public void add(T value) {
         if (isFull()) {
-            System.out.println("list is full");
             return;
         }
         if (isEmpty()) {
@@ -24,13 +21,12 @@ public class CircularQueue {
         data[top] = value;
     }
 
-    public int remove() {
+    public T remove() {
         if (isEmpty()) {
-            System.out.println("list is empty");
-            return -1;
+            return null;
         }
-        int tmp = data[base];
-        data[base] = 0;
+        T tmp = data[base];
+        data[base] = null;
 
         if (base == top) {
             base = -1;
@@ -45,18 +41,18 @@ public class CircularQueue {
     public void clear() {
         if (!isEmpty()) {
             for (int i = 0; i < data.length; i++) {
-                data[i] = 0;
+                data[i] = null;
             }
         }
         top = -1;
         base = -1;
     }
 
-    private boolean isFull() {
+    public boolean isFull() {
         return (top + 1) % data.length == base;
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return top == -1;
     }
 
