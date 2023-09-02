@@ -1,5 +1,6 @@
 /*
 Implementação do flood fill com imagem
+CRIAR PASTA "results" dentro no projeto para funcionamento
  */
 
 import javax.imageio.ImageIO;
@@ -10,59 +11,100 @@ import java.io.File;
 public class ImgFloodFill {
 
     private BufferedImage image;
-    private int width;
-    private int height;
-    private Color initColor;
     private int imgNumber;
 
     public ImgFloodFill(String filename) {
         try {
             this.image = ImageIO.read(new File("assets/" + filename));
-            this.width = image.getWidth();
-            this.height = image.getHeight();
+
         } catch (Exception e) {
             System.out.println("ERRO: arquivo não encontrado");
         }
         System.out.println("Arquivo encontrado com sucesso");
 
-        this.imgNumber = 1;
-
-        this.initColor = null;
+        this.imgNumber = 0;
     }
 
-    public void fill(int posX, int posY, Color newColor) {
+    public void fillByStack(int posX, int posY, Color newColor) {
 
-        // Definimos a cor inicial se ainda não foi definida
-        if (initColor == null) {
-            initColor = new Color(image.getRGB(posX, posY));
-        }
+        int width = image.getWidth();
+        int height = image.getHeight();
 
-        // Conferimos se a posição passada na função é inválida para acessar em nossa imagem
+        // Checking if position is valid
         if (posX >= width || posY >= height || posX < 0 || posY < 0)
             return;
-        // Conferimos se o valor da cor na posição passada é diferente do valor inicial para saber se devemos mudar ou não
-        if (image.getRGB(posX, posY) != initColor.getRGB())
+
+        // Store initial value and change first
+        int initColor = image.getRGB(posX, posY);
+
+        // Storing first position to "paint" with new value
+        StaticStack<Coordinate> stack = new StaticStack<>(width * height);
+        stack.push(new Coordinate(posX, posY));
+
+        // Looping through all positions in the stack
+        while (!stack.isEmpty()) {
+            Coordinate coord = stack.pop();
+
+            // Just continue if inside matrix and different value than initial
+            if (coord.x >= width || coord.y >= height || coord.x < 0 || coord.y < 0
+                    || image.getRGB(coord.x, coord.y) != initColor) {
+                continue;
+            }
+
+            image.setRGB(coord.x, coord.y, newColor.getRGB());
+
+            saveImage();
+
+            stack.push(new Coordinate(coord.x+1, coord.y));
+            stack.push(new Coordinate(coord.x-1, coord.y));
+            stack.push(new Coordinate(coord.x, coord.y-1));
+            stack.push(new Coordinate(coord.x, coord.y+1));
+        }
+    }
+
+    public void fillByQueue(int posX, int posY, Color newColor) {
+
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        // Checking if position is valid
+        if (posX >= width || posY >= height || posX < 0 || posY < 0)
             return;
 
-        // Mudamos de fato a cor na posição atual
-        image.setRGB(posX, posY, newColor.getRGB());
+        // Store initial value and change first
+        int initColor = image.getRGB(posX, posY);
 
-        // Usamos nossa propria função saveImage para salvar um arquivo da imagem
-        saveImage();
+        // Storing first position to "paint" with new value
+        CircularQueue<Coordinate> queue = new CircularQueue<>(width * height);
+        queue.add(new Coordinate(posX, posY));
 
-        // Executamos a mesma função, mas nos valores dos 4 lados ao redor do atual (função é recursiva)
-        fill(posX, posY-1, newColor);
-        fill(posX, posY+1, newColor);
-        fill(posX-1, posY, newColor);
-        fill(posX+1, posY, newColor);
+        // Looping through all positions in the stack
+        while (!queue.isEmpty()) {
+            Coordinate coord = queue.remove();
+
+            // Just continue if inside matrix and different value than initial
+            if (coord.x >= width || coord.y >= height || coord.x < 0 || coord.y < 0
+                    || image.getRGB(coord.x, coord.y) != initColor) {
+                continue;
+            }
+
+            image.setRGB(coord.x, coord.y, newColor.getRGB());
+
+            saveImage();
+
+            queue.add(new Coordinate(coord.x+1, coord.y));
+            queue.add(new Coordinate(coord.x-1, coord.y));
+            queue.add(new Coordinate(coord.x, coord.y-1));
+            queue.add(new Coordinate(coord.x, coord.y+1));
+        }
     }
 
     public void saveImage() {
 
-        String filename = "result" + imgNumber + ".jpg";
+        String filename = "result" + imgNumber + ".png";
 
         try {
-            ImageIO.write(image , "jpg", new File("results/" + filename));
+            ImageIO.write(image , "png", new File("results/" + filename));
         } catch (Exception e) {
             System.out.println("Erro ao salvar imagem");
         }

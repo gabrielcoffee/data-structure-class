@@ -1,44 +1,44 @@
-public class StaticStack {
+public class StaticStack<T> {
 
     private int top;
-    private int[] data;
+    private T[] data;
 
     public StaticStack(int size) {
         this.top = -1;
-        this.data = new int[size];
+        this.data = (T[]) new Object[size];
     }
 
-    public void push(int data) {
+    public void push(T data) {
         if (!isFull()) {
             top++;
             this.data[top] = data;
         }
     }
 
-    public int pop() {
+    public T pop() {
         if (!isEmpty()) {
-            int tmp = data[top];
-            data[top] = -1;
+            T tmp = data[top];
+            data[top] = null;
             top--;
             return tmp;
         }
-        return -1;
+        return null;
     }
 
     public void clear() {
         if (!isEmpty()) {
             for (int i = 0; i <= top; i++) {
-                data[i] = -1;
+                data[i] = null;
             }
         }
         top = -1;
     }
 
-    private boolean isFull() {
+    public boolean isFull() {
         return top == data.length-1;
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return top == -1;
     }
 }

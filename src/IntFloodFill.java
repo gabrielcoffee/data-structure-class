@@ -1,5 +1,6 @@
 /*
-Implementação do flood fill com inteiros
+Implementação do flood fill com array 2d de inteiros
+Para funcionamento se supõe que será passado uma matriz quadrada no construtor
  */
 
 import java.util.Arrays;
@@ -7,44 +8,81 @@ import java.util.Arrays;
 public class IntFloodFill {
 
     private int[][] image;
-    private int size;
-    private int initValue;
 
     public IntFloodFill(int[][] image) {
         this.image = image;
-        this.size = image.length;
-        this.initValue = -1;
     }
 
-    public void fill(int posX, int posY, int newValue) {
+    public void fillByStack(int posX, int posY, int newValue) {
 
-        // Definimos o valor inicial se ainda não foi definido
-        if (initValue == -1) {
-            initValue = image[posY][posX];
+        // Checking if position is valid
+        if (posX >= image.length || posY >= image.length || posX < 0 || posY < 0)
+            return;
+
+        // Store initial value and change first
+        int initValue = image[posY][posX];
+
+        // Storing first position to "paint" with new value
+        StaticStack<Coordinate> stack = new StaticStack<>(image.length * image.length);
+        stack.push(new Coordinate(posX, posY));
+
+        // Looping through all positions in the stack
+        while (!stack.isEmpty()) {
+            Coordinate coord = stack.pop();
+
+            // Just continue if inside matrix and different value than initial
+            if (coord.x >= image.length || coord.y >= image.length || coord.x < 0 || coord.y < 0
+                    || image[coord.y][coord.x] != initValue) {
+                continue;
+            }
+
+            image[coord.y][coord.x] = newValue;
+
+            print();
+
+            stack.push(new Coordinate(coord.x+1, coord.y));
+            stack.push(new Coordinate(coord.x-1, coord.y));
+            stack.push(new Coordinate(coord.x, coord.y-1));
+            stack.push(new Coordinate(coord.x, coord.y+1));
         }
+    }
 
-        // Conferimos se a posição passada na função é inválida para acessar em nosso array 2D
-        if (posX >= size || posY >= size || posX < 0 || posY < 0)
+    public void fillByQueue(int posX, int posY, int newValue) {
+
+        // Checking if position is valid
+        if (posX >= image.length || posY >= image.length || posX < 0 || posY < 0)
             return;
-        // Conferimos se o valor na posição passada é diferente do valor inicial para saber se devemos mudar ou não
-        if (image[posY][posX] != initValue)
-            return;
 
-        // Mudamos de fato o valor na posição atual
-        image[posY][posX] = newValue;
+        // Store initial value and change first
+        int initValue = image[posY][posX];
 
-        // Usamos nossa propria função print para mostrar toda a matriz (image)
-        print();
+        // Storing first position to "paint" with new value
+        CircularQueue<Coordinate> queue = new CircularQueue<>(image.length * image.length);
+        queue.add(new Coordinate(posX, posY));
 
-        // Executamos a mesma função, mas nos valores dos 4 lados ao redor do atual (função é recursiva)
-        fill(posX, posY-1, newValue);
-        fill(posX, posY+1, newValue);
-        fill(posX-1, posY, newValue);
-        fill(posX+1, posY, newValue);
+        // Looping through all positions in the stack
+        while (!queue.isEmpty()) {
+            Coordinate coord = queue.remove();
+
+            // Just continue if inside matrix and different value than initial
+            if (coord.x >= image.length || coord.y >= image.length || coord.x < 0 || coord.y < 0
+                    || image[coord.y][coord.x] != initValue) {
+                continue;
+            }
+
+            image[coord.y][coord.x] = newValue;
+
+            print();
+
+            queue.add(new Coordinate(coord.x+1, coord.y));
+            queue.add(new Coordinate(coord.x-1, coord.y));
+            queue.add(new Coordinate(coord.x, coord.y-1));
+            queue.add(new Coordinate(coord.x, coord.y+1));
+        }
     }
 
     public void print() {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < image.length; i++) {
             System.out.println(Arrays.toString(image[i]));
         }
         System.out.println();
