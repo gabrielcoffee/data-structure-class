@@ -1,10 +1,5 @@
 /*
-
-CASO ENCONTRAREM ALGUM ERRO OU ALGO QUE POSSA MELHORAR POR FAVOR ME AVISEM
-
- CÓDIGO POR GABRIEL FERNANDES
  DISCORD: https://discord.gg/aQycwZVKhz
-
  */
 
 public class DoubleLinkedList<T> {

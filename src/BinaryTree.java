@@ -3,8 +3,6 @@
 public class BinaryTree {
 
     private Node root;
-    private int depthMax;
-    private int depthCounter;
 
     private Node insert(Node parent, int data) {
         if (parent == null) {
@@ -12,42 +10,95 @@ public class BinaryTree {
         }
 
         if (data < parent.data) {
-            depthCounter++;
             parent.left = insert(parent.left, data);
         }
         else if (data > parent.data) {
-            depthCounter++;
             parent.right = insert(parent.right, data);
         }
 
         return parent;
     }
 
-    private boolean containsNodeRecursive(Node current, int data) {
-        if (current == null) {
+    private boolean containsNodeRecursive(Node parent, int data) {
+        if (parent == null) {
             return false;
         }
 
-        if (data == current.data) {
+        if (data == parent.data) {
             return true;
         }
 
-        if (data < current.data) {
-            return containsNodeRecursive(current.left, data);
+        if (data < parent.data) {
+            return containsNodeRecursive(parent.left, data);
         }
         else {
-            return containsNodeRecursive(current.right, data);
+            return containsNodeRecursive(parent.right, data);
+        }
+    }
+
+    public Node deleteRecursive(Node parent, int data) {
+
+        if (parent == null)
+            return parent;
+
+        // Atravessa recursivamente a árvore até chegar no nó que deseja deletar
+        if (data < parent.data) {
+            parent.left = deleteRecursive(parent.left, data);
+            return parent;
+        }
+        else if (data > parent.data) {
+            parent.right = deleteRecursive(parent.right, data);
+            return parent;
+        }
+
+        // Agora o nó parent é o nó que desejamos deletar
+        // Confere se tem apenas um nó filho (esquerda ou direita)
+        if (parent.right == null) {
+            return parent.left;
+        }
+        else if (parent.left == null) {
+            return parent.right;
+        }
+
+        // Agora o nó que desejamos deletar possui 2 nós filhos
+        // Devemos encontrar o sucessor do nó que desejamos deletar
+        else {
+            // Loop para encontrar o sucessor (succ) percorrendo pela esquerda do nó que será deletado
+            Node succParent = parent;
+            Node succ = parent.left;
+            
+            while (succ.right != null) {
+                succParent = succ;
+                succ = succ.right;
+            }
+
+            // Se o pai do sucessor ainda for o nó que queríamos deletar
+            // (descemos apenas um nó na árvore para encontrar o sucessor)
+            // A esquerda do pai do sucessor será a esquerda do sucessor
+            if (succParent != parent) {
+                succParent.right = succ.left;
+            }
+            else {
+                succParent.left = succ.left;
+            }
+
+            parent.data = succ.data;
+
+            return parent;
         }
     }
 
     public void add(int data) {
-        depthCounter = 0;
         root = insert(root, data);
-        depthMax = Math.max(depthCounter, depthMax);
     }
 
-    public boolean containsNode(int value) {
-        return containsNodeRecursive(root, value);
+    public boolean containsNode(int data) {
+        return containsNodeRecursive(root, data);
+    }
+
+    public Node remove(int data) {
+        root = deleteRecursive(root, data);
+        return root;
     }
 
     public void print() {

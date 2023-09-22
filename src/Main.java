@@ -13,6 +13,11 @@ public class Main {
         bt.add(40);
         bt.add(60);
         bt.add(80);
+        bt.add(15);
+
+        bt.print();
+
+        bt.remove(50);
 
         bt.print();
     }
