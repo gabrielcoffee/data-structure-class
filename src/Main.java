@@ -4,21 +4,21 @@ public class Main {
 
     public static void main(String[] args) {
 
-        BinaryTree bt = new BinaryTree();
+        HashTable htable = new HashTable(5);
 
-        bt.add(50);
-        bt.add(30);
-        bt.add(70);
-        bt.add(20);
-        bt.add(40);
-        bt.add(60);
-        bt.add(80);
-        bt.add(15);
+        htable.add("Joao", new Person("Joao"));
+        htable.add("Gabriel", new Person("Gabriel"));
+        htable.add("Amanda", new Person("Amanda"));
+        htable.add("Cleber", new Person("Cleber"));
+        htable.add("Junior", new Person("Junior"));
 
-        bt.print();
+        htable.print();
 
-        bt.remove(50);
+        System.out.println();
 
-        bt.print();
+        htable.remove("Joao");
+        htable.add(501, new Person("Vagner"));
+
+        htable.print();
     }
 }
