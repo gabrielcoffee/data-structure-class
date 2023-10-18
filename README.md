@@ -30,3 +30,16 @@ Essa estrutura possui 3 funções principais:
 **Contains (Contém)**: Verifica se um determinado elemento está presente na árvore, permitindo a busca eficiente de dados.
 
 **Remove (Remover)**: Permite remover um elemento específico da árvore, mantendo a estrutura da árvore binária de busca correta após a remoção, garantindo que a propriedade de ordenação seja preservada.
+
+# HASH TABLE (TABELA HASH)
+É uma estrutura de dados que permite armazenar e recuperar informações de forma eficiente.
+
+![HOWHASHWORKS](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/13b32791-03fd-4eac-b303-0da8a817ce48)
+
+**Criação da Tabela Hash:** Inicialmente, você cria um array, onde os dados serão armazenados.
+
+**Função de Hashing:** A tabela hash usa uma função de hash para converter o dado que você deseja armazenar em um índice numérico.
+
+**Armazenamento dos Dados:** O dado é colocado na posição determinada pela função de hash na tabela hash. Se houver colisões (quando dois ou mais dados são mapeados para o mesmo índice), existem técnicas para lidar com isso, nesse caso utilizamos a técnica de chaining onde dados que colidirem são armazenados em uma lista encadeada.
+
+**Recuperação dos Dados:** Quando você deseja recuperar um dado, a função de hash é usada novamente para calcular o índice onde o dado está armazenado na tabela. O dado é então retornado a partir desse índice.
