@@ -1,24 +1,13 @@
 import java.awt.*;
+import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        HashTable htable = new HashTable(5);
+        int[] nums = {49, 15, 40, 27, 20, 19, 50, 2, 12, 28, 49, 44, 9, 59, 18, 5, 30, 6, 7, 28};
 
-        htable.add("Joao", new Person("Joao"));
-        htable.add("Gabriel", new Person("Gabriel"));
-        htable.add("Amanda", new Person("Amanda"));
-        htable.add("Cleber", new Person("Cleber"));
-        htable.add("Junior", new Person("Junior"));
+        InsertionSort.sort(nums);
 
-        htable.print();
-
-        System.out.println();
-
-        htable.remove("Joao");
-        htable.add(501, new Person("Vagner"));
-
-        htable.print();
     }
 }
