@@ -1,41 +1,51 @@
+// UTILIZANDO O ÚLTIMO ELEMENTO COMO PIVÔ (PIVOT)
+
 import java.util.Arrays;
 
 public class QuickSort {
 
-    static int step = 1;
+    private static int step = 1;
 
-    private static int[] sortRecursive(int start, int end, int[] nums) {
-        int marker = 0;
-        int pivot = nums[nums.length-1];
+    static void swap(int[] nums, int i, int j)
+    {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
 
-        for (int i = 0; i < nums.length; i++) {
+        print(nums);
+    }
+
+    public static void sort(int[] nums, int start, int end)
+    {
+        // Apenas executa a função se houver mais que um elemento na partição
+        if (start < end) {
+
+            int middle = partition(nums, start, end);
+
+            sort(nums, start, middle - 1);
+            sort(nums, middle + 1, end);
+        }
+    }
+
+    public static int partition(int[] nums, int start, int end)
+    {
+        int pivot = nums[end];
+        int marker = (start - 1);
+
+        for (int i = start; i <= end; i++) {
+            
             if (nums[i] <= pivot) {
+                
                 marker++;
-            }
-
-            if (marker < i) {
-                int tmp = nums[i];
-                nums[i] = nums[marker];
-                nums[marker] = tmp;
-
-                print(step, nums);
-                step++;
+                swap(nums, marker, i);
             }
         }
 
-        sortRecursive(0, marker, nums);
-        sortRecursive(marker+1, nums.length, nums);
-
-        return nums;
+        return marker;
     }
 
-    public static int[] sort(int[] nums) {
-        int[] result = sortRecursive(0, nums.length, nums);
-        step = 1;
-        return result;
-    }
-
-    private static void print(int step, int[] nums) {
+    private static void print(int[] nums) {
         System.out.println(step + "  ->  " + Arrays.toString(nums));
+        step++;
     }
 }

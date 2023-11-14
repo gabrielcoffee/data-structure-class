@@ -2,9 +2,11 @@ import java.util.Arrays;
 
 public class InsertionSort {
 
+    private static int step = 1;
+
     public static int[] sort(int[] nums) {
 
-        int step = 1;
+        step = 1;
 
         for (int i = 1; i < nums.length; i++) {
             int cur = nums[i];
@@ -14,21 +16,20 @@ public class InsertionSort {
                 nums[j+1] = nums[j];
                 j--;
 
-                print(step, nums);
-                step++;
+                print(nums);
             }
 
             nums[j + 1] = cur;
 
-            print(step, nums);
-            step++;
+            print(nums);
         }
 
         return nums;
     }
 
-    private static void print(int step, int[] nums) {
+    private static void print(int[] nums) {
         System.out.println(step + "  ->  " + Arrays.toString(nums));
+        step++;
     }
 
 }
