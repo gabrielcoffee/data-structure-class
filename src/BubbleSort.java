@@ -13,26 +13,25 @@ public class BubbleSort {
         print(nums);
     }
 
+    // função da ordenação
     public static int[] sort(int[] nums) {
-        int step = 1;
         int swaps = -1;
+        int end = nums.length-1;
 
         while (swaps != 0) {
             swaps = 0;
 
-            for (int i = 0; i < nums.length-1; i++) {
+            // Passar por todos elementos
+            for (int i = 0; i < end; i++) {
+
                 if (nums[i] > nums[i+1])
                 {
                     swap(nums, i, i+1);
-
-                    if (swaps == -1)
-                        swaps = 1;
-                    else
-                        swaps++;
-
-                    print(nums); // print da classe
+                    swaps++;
                 }
             }
+
+            end--;
         }
 
         return nums;
