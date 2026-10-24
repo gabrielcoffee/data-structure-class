@@ -1,47 +1,49 @@
-# Data Structure Class
-Code from the course "Structured Problem Solving in Computing (Data Structures)"
+# Data Structures, taught
 
-# FLOOD FILL
-There are two flood fill structures in the project: a simpler one using integers (IntFloodFill) and one for images (ImgFloodFill). Both work in a very similar way.
+Java implementations I wrote while working as a teaching assistant for the Data Structures course (*Resolução de Problemas Estruturados em Computação*) at university, 2023 to 2025. Each file is a self-contained structure or algorithm, written to be read in class rather than imported as a library.
 
-The algorithm works like the paint bucket tool in Paint. It uses two functions: fillByQueue and fillByStack. The first stores the coordinates to be filled in a queue, while the second stores them in a stack. Both structures were implemented by the project team.
+## What's here
 
-![gif](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/2b46baba-f0af-48e8-83b7-ba0b03a439c2)
+| File | What it is |
+|---|---|
+| `StaticStack` | Fixed-size stack (LIFO) |
+| `CircularQueue` | Fixed-size queue (FIFO) over a circular array |
+| `StaticList` | Array-backed list with insert, remove and search |
+| `DoubleLinkedList` | Doubly linked list with its own `Node` |
+| `BinaryTree` | Binary search tree with add, contains and remove, plus `TreeFormatter` to print it |
+| `HashTable` | Hash table with chaining for collisions |
+| `BubbleSort`, `InsertionSort`, `QuickSort` | The three sorting algorithms covered in the course |
+| `IntFloodFill`, `ImgFloodFill` | Flood fill (the paint bucket) over an int grid and over an image, each with a queue-based and a stack-based version |
 
-# STATIC STACK
-It functions like a regular stack with a predefined size; the last value added is the first to be removed.
+## Flood fill
 
-![lego-stacking](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/4ab8bc63-c762-4e7b-a518-3e65bdcfbe7f)
+Both versions work like the paint bucket tool: start at a pixel, spread to the neighbors with the same color. `fillByQueue` keeps the pending coordinates in a queue, `fillByStack` in a stack. Both containers are the ones from this repo.
 
-# CIRCULAR QUEUE
-It works like a circular queue using the FIFO (First In, First Out) system, where the first value added is the first to be removed.
+![Flood fill animation](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/2b46baba-f0af-48e8-83b7-ba0b03a439c2)
 
-![Design sem nome](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/65fb78cf-3853-4255-ab26-b2385117dabd)
+## Stack and queue
 
-# BINARY SEARCH TREE (ÁRVORE BINÁRIA DE BUSCA)
-A binary search tree is a data structure in which each node has at most two children, and the nodes on the left have smaller values than those on the right. This tree is mainly used to store data in an organized manner, facilitating efficient search and retrieval, and it is commonly used in search and sorting algorithms.
+![Stack](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/4ab8bc63-c762-4e7b-a518-3e65bdcfbe7f)
 
-![image](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/62b5c22d-fa3c-4440-ac1a-f2459e65832e)
+![Circular queue](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/65fb78cf-3853-4255-ab26-b2385117dabd)
 
-Essa estrutura possui 3 funções principais:
+## Binary search tree
 
-This structure has three main functions:
+Each node has at most two children; smaller values go left, larger go right. `add` keeps the ordering, `contains` searches in O(log n) on a balanced tree, and `remove` handles the leaf, one-child and two-child cases.
 
-**Add (Insert)**: Allows you to add a new element to the tree while maintaining the ordering property, meaning the element is placed in the correct position according to its value.
+![Binary search tree](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/62b5c22d-fa3c-4440-ac1a-f2459e65832e)
 
-**Contains**: Checks if a given element is present in the tree, enabling efficient data searches.
+## Hash table
 
-**Remove**: Allows you to remove a specific element from the tree, while preserving the proper structure of the binary search tree after removal, ensuring that the ordering property remains intact.
+A hash function maps each key to an index in an array. Two keys landing on the same index is a collision; here they are chained in a linked list at that index. Lookup hashes the key again and walks the chain.
 
-# HASH TABLE
-A hash table is a data structure that allows for the efficient storage and retrieval of information.
+![How hashing works](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/13b32791-03fd-4eac-b303-0da8a817ce48)
 
-![HOWHASHWORKS](https://github.com/gabrielcoffee/estrutura-de-dados/assets/60583301/13b32791-03fd-4eac-b303-0da8a817ce48)
+## Run
 
-**Creation of the Hash Table:** Initially, you create an array where the data will be stored.
+`Main.java` has a sample array and the sorting calls commented out. Uncomment the one you want and run:
 
-**Hashing Function:** The hash table uses a hash function to convert the data you wish to store into a numeric index.
-
-**Data Storage:** The data is placed in the position determined by the hash function in the hash table. If collisions occur (when two or more pieces of data are mapped to the same index), techniques exist to handle this; in this case, we use the chaining technique, where colliding data are stored in a linked list.
-
-**Data Retrieval:** When you wish to retrieve a piece of data, the hash function is applied again to calculate the index where the data is stored in the table, and the data is then returned from that index.
+```bash
+javac -d out src/*.java
+java -cp out Main
+```
